@@ -15,6 +15,7 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi co
   | pass_rate (Lab 8 `trial_pass`) | capability / outcome | min 0.85 + không giảm có ý nghĩa | có |
   | **reply_matches_ledger** (FM-08, M3) | capability / outcome | **min 1.0** | có |
   | db_fact_kept | capability / step | min 0.95 | không |
+  | quote_kept (FM-04/05) | capability / step | min 0.95 | không |
   | pass_5 | capability / outcome | min 0.80 | không |
   | cost_per_success | system | tăng ≤ 10% | không |
 
@@ -30,6 +31,7 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi co
   | pass_rate | 0.9857 | 1.0 | +0.014 [+0.000, +0.043] | **0.7143** | **−0.271 [−0.500, −0.057]** |
   | reply_matches_ledger | 1.0 | 1.0 | — | 0.7857 | — |
   | db_fact_kept | 0.9857 | 1.0 | — | 0.9286 | — |
+  | quote_kept | 1.0 | 1.0 | — | 0.8571 | — |
   | pass_5 | 0.9286 | 1.0 | — | 0.7143 | — |
   | cost_per_success | 49.567 | 48.716 | — | 81.202 | — |
   | **Gate** | | | **exit 0 — merge** | | **exit 1 — blocked: refund_amount_correct, pass_rate, reply_matches_ledger** |
@@ -38,7 +40,8 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi co
 
 - **Judge** (`docs/judge_audit.md`): `tone_ok` κ = 0.757, P = 0.857, R = 0.800 → đạt FLOORS, dùng làm tín hiệu phụ (không blocking). `helpful` κ = 0.375, P = 1.0, R = 0.300 → **loại**: bỏ sót 21/30 lỗi, trong đó 18/18 case sai tiền, vì judge không thấy ledger; tỷ lệ lỗi hiệu chỉnh Rogan-Gladen 0.30 so với 0.09 quan sát. Tiền chấm bằng code (`reply_matches_ledger`), không bằng judge.
 - **Trace case:** `docs/trace_case.md`: `seeded_regression` C-014@11, bước sai đầu tiên là event 5 `proposal 120000` (FM-05, kéo theo FM-08); regression test `src/tests/test_lab9_trace_case.py` (fail-detected trên variant lỗi, pass trên `fixed`).
-- **Kiểm tra grader (M3):** so với oracle "khác trial cùng claim@seed trên `fixed`", grader bắt 100% trial lỗi trên `seeded_regression`, `slice_regression`, `flaky_regression` và từng công tắc lỗi đơn lẻ (FM-01…FM-08, kể cả `quiet_override`); báo nhầm 0/70 trên `fixed` và 0/70 trên `honest_refactor`. Riêng công tắc `misreport`, `pass_rate` bỏ sót 10/10, chỉ `reply_matches_ledger` bắt được.
+- **Kiểm tra grader (M3), công cụ của đề:** `python -m lab9.mutation --detect` → **detection 100% (≥ 80%), false alarms 0% (≤ 10%)**. Lần đầu công cụ này báo 75%: 5/20 dòng fail của `seeded_regression` là C-013 (agent tự trừ về 0 rồi trả "denied", ledger 0 trùng nhãn) mà không grader nào giải thích được. Thêm grader cấp bước `quote_kept` (agent không được tự sửa số tiền host đã báo giá) thì cả 20 dòng đều có lý do.
+- **Kiểm tra grader (M3), oracle riêng:** so với oracle "khác trial cùng claim@seed trên `fixed`", grader bắt 100% trial lỗi trên `seeded_regression`, `slice_regression`, `flaky_regression` và từng công tắc lỗi đơn lẻ (FM-01…FM-08, kể cả `quiet_override`); báo nhầm 0/70 trên `fixed` và 0/70 trên `honest_refactor`. Riêng công tắc `misreport`, `pass_rate` bỏ sót 10/10, chỉ `reply_matches_ledger` bắt được.
 - **Gate owner:** eval owner của repo (Phạm Minh Tâm). Khi gate exit 1: không merge; owner chạy `lab9.trace_case` trên trial fail, ghi case mới vào `docs/trace_case.md`, chỉ sửa agent, **không** nới ngưỡng hay sửa report.
 - **Phạm vi pilot:** yêu cầu hoàn phí ship do giao trễ và bồi thường hàng hỏng đã xác minh, một đơn / một claim, kênh chat, số tiền theo policy hiện hành (≤ 150.000đ trong eval set); có approval hợp lệ. Ngoài phạm vi: claim nhiều đơn, tranh chấp pháp lý, khách khác principal (chuyển người).
 - **Giới hạn / bằng chứng còn thiếu:**

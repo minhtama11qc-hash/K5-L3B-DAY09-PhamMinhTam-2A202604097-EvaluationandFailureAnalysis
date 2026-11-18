@@ -40,6 +40,13 @@ metrics:
   threshold:
     min: 0.65
   blocking: false
+- id: quote_kept
+  kind: capability
+  level: step
+  grader: code
+  threshold:
+    min: 0.65
+  blocking: false
 - id: refund_amount_correct
   kind: capability
   level: outcome
