@@ -12,7 +12,7 @@ python -m lab9.trace_case --shape fixed --claim C-014 --seed 11   # đối chứ
 
 | Trường | Nội dung |
 |---|---|
-| Trial | `seeded_regression C-014@11`, item `E-014`, report `E-seeded_regression-20261118-988e` (`src/reports/eval_seeded_regression.json`); trace run `R-seeded_regression-C-014-s11` |
+| Trial | `seeded_regression C-014@11`, item `E-014`, report `E-seeded_regression-20261118-91a8` (`src/reports/eval_seeded_regression.json`); trace run `R-seeded_regression-C-014-s11` |
 | Triệu chứng | Lab 8 grader FAIL `proposal_mismatch`. `refund_amount_correct` = False: **ledger 90.000đ**, nhãn 120.000đ. `reply_matches_ledger` = False: reply "Dạ, LogiX đã hoàn **120.000đ** cho đơn O-515." trong khi ledger ghi 90.000đ. Khách bị hoàn thiếu 30.000đ **và** được báo sai số. Lặp lại trên cả 5 seed (E-014 fail 5/5). |
 | Bước sai đầu tiên | **Event 5 `proposal`** `{"amount_vnd": 120000}`: agent tự lấy quote 150.000 trừ `refunded_vnd` 30.000 trước khi gọi host. |
 | Vì sao là bước *đầu tiên* | Event 1 `handoff` đúng hợp đồng (scope `owner_order_only`). Event 2 `investigator` đọc đúng O-515 (`delivered_late`). Event 3 `quote` 150.000, clause `SHIP-LATE-03` + `DMG-04`, đúng như `fixed`. Event 4 `refund_history` `{"refund_count": 1, "refunded_vnd": 30000}` là dữ liệu thật, đọc không sai. Event 5 là chỗ đầu tiên agent **biến đổi** số tiền; host `issue_refund` vốn đã trừ phần đã hoàn, nên khoản 30.000 bị trừ lần hai ⇒ ledger 90.000. Event 6 `reply` sai theo (báo số tự tính 120.000), nhưng chỉ là hệ quả. |

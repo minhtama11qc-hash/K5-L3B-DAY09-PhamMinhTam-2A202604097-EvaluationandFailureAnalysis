@@ -2,8 +2,8 @@
 
 Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi con số dưới đây lấy từ report do `python -m lab9.eval` / `lab9.gate` / `lab9.judge` sinh ra, không gõ tay.
 
-- **Run ID / eval set SHA:** baseline `E-swarm-20261118-988e` · PR mẫu `E-fixed-20261118-988e`, `E-seeded_regression-20261118-988e` · eval set sha `988ef54ef922`
-- **Phiên bản:** code: `stats.py` commit `6e1a143`, `graders.py` + `metric_spec.yaml` commit `b0166ad`, `evalset.py` commit `d6978aa` · eval set v1 (sha `988ef54ef922`) · metric_spec `1.0` · seeds 11/22/33/44/55 · MockLLM · Python 3.13.7
+- **Run ID / eval set SHA:** baseline `E-swarm-20261118-91a8` · PR mẫu `E-fixed-20261118-91a8`, `E-seeded_regression-20261118-91a8` · eval set sha `91a82cd9911a`
+- **Phiên bản:** code: `stats.py` commit `6e1a143`, `graders.py` + `metric_spec.yaml` commit `b0166ad`, `evalset.py` commit `d6978aa` · eval set v1 (sha `91a82cd9911a`) · metric_spec `1.0` · seeds 11/22/33/44/55 · MockLLM · Python 3.13.7
 - **Eval set:** v1, 14 item × 5 seed = 70 trial, nguồn `lab8_public` (matrix T01–T14); nhãn tách riêng ở `labels_v1.json`; mỗi item có `failure_modes` (FM-01…FM-08) và `provenance`. `evalset --check`: 0 problem.
 - **Metric & ngưỡng** (`src/config/metric_spec.yaml`):
 
@@ -50,7 +50,7 @@ Card này đi kèm mỗi báo cáo và được dùng lại ở Day 10. Mọi co
   - Không đo trên người dùng thật.
 ## v2 (Advanced / Expert: M5–M7)
 
-- **Phiên bản:** eval set v2 (sha `d5005e9bf644`, 28 item = 14 v1 + 14 adversarial) · metric_spec `2.0` · baseline `E-swarm-20261118-d500` (`src/reports/baseline_v2.json`) · seeds 11/22/33/44/55.
+- **Phiên bản:** eval set v2 (sha `950cd5555748`, 28 item = 14 v1 + 14 adversarial) · metric_spec `2.0` · baseline `E-swarm-20261118-950c` (`src/reports/baseline_v2.json`) · seeds 11/22/33/44/55.
 - **Ngưỡng chọn từ A/A.** `python -m lab9.mutation --spec config/metric_spec_v2.yaml --aa 66,77,88,99,110`: Δ = **+0.0000 trên mọi metric** (pass_rate 0.9786, pass_hat_5 0.8929 ở cả hai bộ seed). MockLLM tất định nên dải nhiễu = 0. Với LLM thật, sampling (temperature, thứ tự tool call, cách diễn đạt) làm cùng item@seed lúc pass lúc fail, nên Δ A/A > 0, và mọi sàn phải nằm **ngoài** dải đó; nếu không, gate chặn PR trung thực một cách ngẫu nhiên. Sàn chọn:
 
   | Ngưỡng | Giá trị | baseline swarm | fixed / honest_refactor | regression tệ nhất |
