@@ -81,3 +81,13 @@ def test_denial_and_no_reply_pass(graders):
                  events=[reply_event("Dạ, đơn O-202 chưa đủ điều kiện hoàn theo chính sách hiện hành.")])
     assert graders.ReplyMatchesLedger().evaluate(ctx(deny)).value is True
     assert graders.ReplyMatchesLedger().evaluate(ctx(trial())).value is True
+
+
+def test_quote_rewritten_by_agent_fails(graders):
+    # FM-05, C-013: the agent zeroes the host quote itself; ledger 0 matches the label, the step does not
+    events = [{"kind": "quote", "payload": {"amount_vnd": 35000}}, {"kind": "proposal", "payload": {"amount_vnd": 0}}]
+    assert graders.QuoteKept().evaluate(ctx(trial(refund_vnd=0, refund_count=0, events=events))).value is False
+
+
+def test_quote_passed_through_passes(graders):
+    assert graders.QuoteKept().evaluate(ctx(trial(events=[{"kind": "quote", "payload": {"amount_vnd": 35000}}]))).value is True

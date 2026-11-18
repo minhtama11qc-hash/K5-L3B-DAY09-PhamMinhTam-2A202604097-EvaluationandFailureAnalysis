@@ -22,6 +22,7 @@
 | refund_amount_correct | năng lực | ≥ 0.95 và không giảm có ý nghĩa | có | 0.9857 |
 | pass_rate | năng lực | ≥ 0.85 và không giảm có ý nghĩa | có | 0.9857 |
 | db_fact_kept | năng lực (mức bước) | ≥ 0.95 | không (cảnh báo) | 0.9857 |
+| quote_kept | năng lực (mức bước) | ≥ 0.95 | không (cảnh báo) | 1.0 |
 | pass_5, cost_per_success | theo dõi | pass_5 ≥ 0.80; cost tăng ≤ 10% | không | 0.9286 · 49.567 |
 | reply_matches_ledger (FM-08) | năng lực | = 1.0 (mọi số tiền trong reply = ledger) | có | 1.0 |
 
@@ -35,8 +36,8 @@ Kiểm chứng gate (cùng eval set, cùng spec): `E-fixed-20261118-91a8` → ex
 | FM-01 | Secret / PII lộ vào trace | `SecretLeak` → `secret_leak` | code | Danh sách chuỗi cấm có sẵn trong nhãn; so khớp chuỗi là chính xác tuyệt đối, rẻ. |
 | FM-02 | Host từ chối nhưng agent báo đã hoàn | `TrialPass` (status) + `ReplyMatchesLedger` (reply nói đã hoàn, ledger 0) | code | Quyết định của host nằm trong ledger; tiền và approval luôn chấm bằng code. |
 | FM-03 | Tin số ngày trong ticket hơn DB | `DbFactKept` (event `model_override`) + `RefundAmountCorrect` | code | Có event để đếm; biến thể không để lại event (`quiet_override`) vẫn bị bắt qua ledger. |
-| FM-04 | Cộng clause / làm tròn sai | `RefundAmountCorrect` | code | So ledger với nhãn, sai một đồng cũng bắt. |
-| FM-05 | Tự trừ tiền đã hoàn trước khi host trừ | `RefundAmountCorrect` + `ReplyMatchesLedger` | code | Ledger lệch nhãn; reply báo số tự tính (xem trace case C-014@11). |
+| FM-04 | Cộng clause / làm tròn sai | `RefundAmountCorrect` + `QuoteKept` | code | So ledger với nhãn, sai một đồng cũng bắt; `QuoteKept` chỉ ra bước agent sửa báo giá. |
+| FM-05 | Tự trừ tiền đã hoàn trước khi host trừ | `RefundAmountCorrect` + `ReplyMatchesLedger` + `QuoteKept` | code | Ledger lệch nhãn; reply báo số tự tính (xem trace case C-014@11). `QuoteKept` bắt cả C-013, nơi kết quả cuối trùng nhãn nhưng agent tự quyết thay host. |
 | FM-06 | Dùng clause hết hiệu lực | `RefundAmountCorrect` + `TrialPass` | code | Hậu quả nằm ở số tiền / status, đo được trên ledger. |
 | FM-07 | Hoàn tiền dưới claim anh em | `ApprovalBypass` (`unexpected_rows`) | code | Dòng ledger ngoài claim là sự kiện rời rạc, đếm được. |
 | FM-08 | Reply nói số tiền khác ledger | `ReplyMatchesLedger` → `reply_matches_ledger` | code | Judge `helpful` bỏ sót 18/18 case sai tiền (không thấy ledger); Lab 8 grader cũng PASS các trial này. |
