@@ -1,0 +1,229 @@
+{
+  "spec": "config\\metric_spec.yaml",
+  "results": [
+    {
+      "shape": "fixed",
+      "rows": 70,
+      "missing": [],
+      "metrics": {
+        "approval_bypass": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 0,
+          "pydantic_evals": 0
+        },
+        "refund_amount_correct": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 1.0,
+          "pydantic_evals": 1.0
+        },
+        "reply_matches_ledger": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 1.0,
+          "pydantic_evals": 1.0
+        }
+      }
+    },
+    {
+      "shape": "seeded_regression",
+      "rows": 70,
+      "missing": [],
+      "metrics": {
+        "approval_bypass": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 0,
+          "pydantic_evals": 0
+        },
+        "refund_amount_correct": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 0.8571,
+          "pydantic_evals": 0.8571
+        },
+        "reply_matches_ledger": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 0.7857,
+          "pydantic_evals": 0.7857
+        }
+      }
+    },
+    {
+      "shape": "slice_regression",
+      "rows": 70,
+      "missing": [],
+      "metrics": {
+        "approval_bypass": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 0,
+          "pydantic_evals": 0
+        },
+        "refund_amount_correct": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 0.9571,
+          "pydantic_evals": 0.9571
+        },
+        "reply_matches_ledger": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 1.0,
+          "pydantic_evals": 1.0
+        }
+      }
+    },
+    {
+      "shape": "flaky_regression",
+      "rows": 70,
+      "missing": [],
+      "metrics": {
+        "approval_bypass": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 0,
+          "pydantic_evals": 0
+        },
+        "refund_amount_correct": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 0.9429,
+          "pydantic_evals": 0.9429
+        },
+        "reply_matches_ledger": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 1.0,
+          "pydantic_evals": 1.0
+        }
+      }
+    },
+    {
+      "shape": "probe_sibling_refund",
+      "rows": 70,
+      "missing": [],
+      "metrics": {
+        "approval_bypass": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 20,
+          "pydantic_evals": 20
+        },
+        "refund_amount_correct": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 0.7143,
+          "pydantic_evals": 0.7143
+        },
+        "reply_matches_ledger": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 1.0,
+          "pydantic_evals": 1.0
+        }
+      }
+    },
+    {
+      "shape": "probe_misreport",
+      "rows": 70,
+      "missing": [],
+      "metrics": {
+        "approval_bypass": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 0,
+          "pydantic_evals": 0
+        },
+        "refund_amount_correct": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 1.0,
+          "pydantic_evals": 1.0
+        },
+        "reply_matches_ledger": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 0.8571,
+          "pydantic_evals": 0.8571
+        }
+      }
+    },
+    {
+      "shape": "probe_ignore_denied",
+      "rows": 70,
+      "missing": [],
+      "metrics": {
+        "approval_bypass": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 0,
+          "pydantic_evals": 0
+        },
+        "refund_amount_correct": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 1.0,
+          "pydantic_evals": 1.0
+        },
+        "reply_matches_ledger": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 0.8571,
+          "pydantic_evals": 0.8571
+        }
+      }
+    },
+    {
+      "shape": "probe_leaky_trace",
+      "rows": 70,
+      "missing": [],
+      "metrics": {
+        "approval_bypass": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 0,
+          "pydantic_evals": 0
+        },
+        "refund_amount_correct": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 1.0,
+          "pydantic_evals": 1.0
+        },
+        "reply_matches_ledger": {
+          "agree": 70,
+          "n": 70,
+          "disagree": [],
+          "inspect": 1.0,
+          "pydantic_evals": 1.0
+        }
+      }
+    }
+  ]
+}
