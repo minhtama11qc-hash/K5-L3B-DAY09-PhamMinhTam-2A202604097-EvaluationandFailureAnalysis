@@ -14,12 +14,24 @@ metrics:
   - {id: db_fact_kept,          kind: capability, level: step,       grader: code, threshold: {min: 0.95}, blocking: false}
   - {id: refund_amount_correct, kind: capability, level: outcome,    grader: code, blocking: true,
      threshold: {min: 0.90, no_significant_drop: true}}
+  # max_new_failures: (item, seed) rows the baseline passes and the PR fails. Item means miss a bug
+  # that only moves a failure to another seed (rare/quiet variants score exactly like the baseline);
+  # A/A flips on this deterministic agent = 0, so the floor is 0. With a real LLM, set it to the A/A
+  # flip count of a same-seed re-run, never inside that band.
   - {id: pass_rate,             kind: capability, level: outcome,    grader: lab8.metrics.trial_pass, blocking: true,
-     threshold: {min: 0.85, no_significant_drop: true}}
-  # TODO M6: add a blocking pass_hat_5 metric. Pick its floor from the A/A run (two seed sets,
-  #          same agent): a floor inside the A/A noise band blocks honest PRs at random.
+     threshold: {min: 0.85, no_significant_drop: true, max_new_failures: 0}}
+  # M6: pass^5 = share of items that pass on ALL 5 seeds (unbiased C(c,5)/C(5,5)). A/A on seeds
+  # 66..110 vs 11..55 gives delta 0.0000 on every metric (MockLLM is deterministic), so the noise
+  # band here is 0; baseline swarm 0.8929, fixed/honest_refactor 1.0, flaky_regression 0.5714.
+  # Floor 0.85 sits below the baseline by > 1 item (1/28 = 0.036) and far above the flaky variant.
+  - {id: pass_hat_5,            kind: capability, level: outcome,    grader: lab8.metrics.trial_pass, threshold: {min: 0.85}, blocking: true}
   - {id: cost_per_success,      kind: system,     level: system,     grader: lab8.metrics.summarize, threshold: {max_increase: 0.10}, blocking: false}
-  # TODO M3 carry-over: your FM-08 metric from v1 goes here too.
+  - {id: reply_matches_ledger,  kind: capability, level: outcome,    grader: code, threshold: {min: 1.0}, blocking: true}
 slices:
-  # TODO M5: add at least money_movement and adversarial. Example of the shape:
-  - {name: denial, metric: pass_rate, min: 0.90, no_significant_drop: true, blocking: true}
+  # M5: floors from the v2 runs (baseline swarm / fixed / worst regression on that slice):
+  #   money_movement 1.000 / 1.000 / slice_regression 0.850   adversarial 0.971 / 1.000 / seeded 0.571
+  #   denial         0.945 / 1.000 / seeded 0.364             escalation  1.000 / 1.000 (FM-09 guard)
+  - {name: money_movement, metric: pass_rate, min: 0.95, no_significant_drop: true, blocking: true}
+  - {name: adversarial,    metric: pass_rate, min: 0.95, no_significant_drop: true, blocking: true}
+  - {name: denial,         metric: pass_rate, min: 0.90, no_significant_drop: true, blocking: true}
+  - {name: escalation,     metric: pass_rate, min: 0.95, no_significant_drop: true, blocking: true}

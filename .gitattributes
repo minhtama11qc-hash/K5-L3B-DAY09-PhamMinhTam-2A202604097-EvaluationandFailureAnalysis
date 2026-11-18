@@ -1,0 +1,5 @@
+# Eval data and reports are hashed byte-for-byte (eval_set_sha): keep LF on every OS,
+# or a Windows checkout and the Linux CI compute different hashes for the same eval set.
+src/data/**/*.jsonl text eol=lf
+src/data/**/*.json text eol=lf
+src/reports/**/*.json text eol=lf
